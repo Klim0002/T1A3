@@ -1,0 +1,15 @@
+
+1000
+500
+ income=1000
+ budget=300
+ income=1000
+ budget=300
+ income=1000
+ budget=233
+ income=1999
+ budget=233
+ income=1000
+ budget=400
+ income=1500
+ budget=500

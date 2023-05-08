@@ -1,8 +1,24 @@
-income = []
-expenses = []
-budget = []
-streak = 0
+import pandas as pd
+import numpy as np
 
+income = 0
+expenses = []
+budget = 0
+streak = 0
+difference = 0
+entries = 0
+
+def congrats():
+    difference = int(budget) - int(amountToAdd)
+                    
+    if difference > 0:
+            print(difference)
+            print("yay!") 
+            streak = streak + 1
+        
+    else:
+        streak = 0
+        print("oh no! you're over budget")
 
 def option_1():
     print("what is your income?")
@@ -11,39 +27,43 @@ def option_1():
     budget = input(" > ")
     budget_percentage = (int(budget) / int(income) * 100)
     str(budget_percentage)
-    print("your income is " + str(income) + " and your budget is " + str(budget) + ". This makes your budget" + str(budget_percentage) +"%" + " of your income.")
     print("\n\n")
+    print("your income is " + str(income) + " and your budget is " + str(budget) + ". This makes your budget " + str(budget_percentage) + "%" + " of your income.")
+    print("\n\n")
+    file = open("record.txt", "a")
+    file.write("\n income=" + income)
+    file.write("\n budget=" + budget)
     
-    
-def option_2(amount, difference):
-    expense = {"amount": amount, "difference": difference }
+def option_2(date, amount):
+    expense = {"date": date, "amount": amount }
     expenses.append(expense)
+        
     
-    if difference > 0:
-            print("yay!") 
-            streak = streak + 1
-            
-    else:
-        streak = 0
-        print("oh no! you're over budget")
         
 
 def option_3():
-  print("\nHere is a list of your expenses...")
-  print("------------------------------------")
-  counter = 0
-  for expense in expenses:
-    print("#", counter, " - ", option_2['amount'], " - ", option_2['difference'])
-    counter += 1
-  print("\n\n")
-      
+    print("\nHere is a list of your expenses...")
+    print("------------------------------------")
+    counter = 0
+    for expense in expenses:
+        print("#" , counter, " - ", expense["date"], " - ", expense["amount"])
+        counter += 1
+    print("\n\n")
+    file = open("record.txt", "a")
+    file.write(expense)
+    
+
 
 def option_4():
-    average = (option_2(difference_sum) / option_2(entries))
+    average = (option_2(difference_sum) / option_2[counter])
     print(average)
 
 def option_5():
     print(option_2(streak))
+    
+def option_6():
+    file = open("record.txt", "a")
+    file.write("\n" + expenses)
     
 
 
@@ -57,45 +77,52 @@ def menu():
     print("option 3. see all past expenses")
     print("option 4. what is the average overage?")
     print("option 5. what is your current streak?")
-    print("option 6. export to text file")
     print("option 0. exit")
 
 
 
 if __name__ == "__main__":
-  while True:
-    menu()
-    options = input(" > ")
-    if (options == "1"):
-            while True:    
-                try:
-                    option_1()
-                    break
-                except:
-                    print("invalid")
-                    break    
-    elif (options == "2"):
-        while True:
-            print("How much was this expense?")
+    while True:
+        menu()
+        options = input(" > ")
+        if (options == "1"):
+                while True:    
+                    try:
+                        option_1()
+                        break
+                    except:
+                        print("invalid")
+                        break    
+        elif (options == "2"):
             while True:
+                print("what is the date?")
                 try:
-                    amountToAdd = input("> ")
-                    difference = int(budget) - int(amountToAdd)
+                    date = input("dd/mm/yy > ")
                     break
                 except:
                     print("Invalid input. Please try again.")
-            option_2(amountToAdd, difference)
-    elif (options == "3"):
-        option_3()
-        
-    elif (options == "4"):
-        option_4()
-        
-    elif (options == "5"):
-        option_5()
-        
-    elif (options == "0"):
-        quit()
-    else:
-        print("invalid function")
+                    
+            print("what is the total amount of expenses for the day?")    
+            while True:
+                try:
+                    amountToAdd = input("> ")
+                    break       
+                except:
+                    print("Invalid input. Please try again.")
+            
+            congrats()
+            option_2(date, amountToAdd)
+                    
+        elif (options == "3"):
+            option_3()
+            
+        elif (options == "4"):
+            option_4()
+            
+        elif (options == "5"):
+            option_5()
+        elif (options == "0"):
+            quit()
+        else:
+            print("invalid function")
 

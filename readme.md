@@ -17,3 +17,7 @@ removed delete function for the time being. will reconsider after
 07/05 1459
 
 changed direction. adding modules after researching.
+
+08/05
+
+changed testing and debugging the program without new file entry.
