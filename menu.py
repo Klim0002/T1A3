@@ -1,69 +1,74 @@
 import pandas as pd
 import numpy as np
 
-income = 0
-expenses = []
-budget = 0
+BUDGET = []
+DATE = []
+DIFFERENCE = []
+AMOUNT = []
 streak = 0
-difference = 0
 entries = 0
 
-def congrats():
-    difference = int(budget) - int(amountToAdd)
-                    
-    if difference > 0:
-            print(difference)
-            print("yay!") 
-            streak = streak + 1
-        
-    else:
-        streak = 0
-        print("oh no! you're over budget")
+
 
 def option_1():
-    print("what is your income?")
-    income = input(" > ")
-    print("what is your budget?")
-    budget = input(" > ")
+    
+    BUDGET.append(budget)
     budget_percentage = (int(budget) / int(income) * 100)
     str(budget_percentage)
     print("\n\n")
-    print("your income is " + str(income) + " and your budget is " + str(budget) + ". This makes your budget " + str(budget_percentage) + "%" + " of your income.")
+    print("your income is " + income + " and your budget is " + budget + ". This makes your budget " + str(budget_percentage) + "%" + " of your income.")
     print("\n\n")
-    file = open("record.txt", "a")
-    file.write("\n income=" + income)
-    file.write("\n budget=" + budget)
-    
-def option_2(date, amount):
-    expense = {"date": date, "amount": amount }
-    expenses.append(expense)
-        
-    
-        
 
+def option_2(date, amount, budget, differences):
+    streak = 0
+    entries = 0
+    DATE.append(date)
+    AMOUNT.append(amount)
+    BUDGET.append(budget)
+    DIFFERENCE.append(differences)
+    difference = int(budget) - int(amount)
+        
+    
+    if (difference > 0):
+        print("\n\n")
+        print(difference)
+        print("yay!")
+        print("\n\n") 
+        streak = streak + 1
+        entries = entries + 1
+        difference = differences
+        
+    else:
+        streak = 0
+        entries = entries + 1
+        difference = differences
+        print("\n\n")
+        print("oh no! you're over budget")
+        print("\n\n")
+      
+    
+        
+# create a data frame to add expenses and to print
 def option_3():
-    print("\nHere is a list of your expenses...")
-    print("------------------------------------")
-    counter = 0
-    for expense in expenses:
-        print("#" , counter, " - ", expense["date"], " - ", expense["amount"])
-        counter += 1
-    print("\n\n")
-    file = open("record.txt", "a")
-    file.write(expense)
+    expense_report = pd.DataFrame()
+    expense_report["DATE"] = DATE
+    expense_report["AMOUNT"] = AMOUNT
+    expense_report["BUDGET"] = BUDGET
+    expense_report["DIFFERENCE"] = DIFFERENCE
+    expense_report.to_csv("expenses.csv")
+    print(expense_report)
+
     
 
 
 def option_4():
-    average = (option_2(difference_sum) / option_2[counter])
+    average = option_2[difference] / option_2(entries)
     print(average)
 
 def option_5():
     print(option_2(streak))
     
-def option_6():
-    file = open("record.txt", "a")
-    file.write("\n" + expenses)
+
     
 
 
@@ -86,13 +91,25 @@ if __name__ == "__main__":
         menu()
         options = input(" > ")
         if (options == "1"):
-                while True:    
+                while True:
+                    print("what is your current income?")    
                     try:
-                        option_1()
+                        income = input(">")
                         break
                     except:
                         print("invalid")
-                        break    
+                        
+                while True:
+                    print("what is your current budget?")    
+                    try:
+                        budget = input(">")
+                        break
+                    except:
+                        print("invalid")
+                option_1()        
+                
+                
+                         
         elif (options == "2"):
             while True:
                 print("what is the date?")
@@ -105,13 +122,13 @@ if __name__ == "__main__":
             print("what is the total amount of expenses for the day?")    
             while True:
                 try:
-                    amountToAdd = input("> ")
+                    amount = input("> ")
                     break       
                 except:
                     print("Invalid input. Please try again.")
             
-            congrats()
-            option_2(date, amountToAdd)
+            difference = int(budget) - int(amount)
+            option_2(date, amount, budget, difference)
                     
         elif (options == "3"):
             option_3()
@@ -125,4 +142,9 @@ if __name__ == "__main__":
             quit()
         else:
             print("invalid function")
+            
+
+
+# create a data frame to add expenses
+
 

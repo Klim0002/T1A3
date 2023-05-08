@@ -13,3 +13,7 @@
  budget=400
  income=1500
  budget=500
+ income=1000
+ budget=200
+ income=1000
+ budget=200
